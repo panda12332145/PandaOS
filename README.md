@@ -448,3 +448,29 @@ Sinta-se à vontade para contribuir, reportar issues ou enviar pull requests par
 **Happy Coding!** 👨‍💻👩‍💻
 
 ---
+
+# created by - Panda12332145 
+
+![Panda12332145' Instagram Profile Picture](https://scontent-gru1-1.cdninstagram.com/v/t51.2885-19/117600834_654064835492344_4051007124330294069_n.jpg?stp=dst-jpg_s150x150_tt6&_nc_ht=scontent-gru1-1.cdninstagram.com&_nc_cat=104&_nc_oc=Q6cZ2AGzi7nuJGYfI5pToRe8PalArBoSQlsQZBQp_Gv89OA_BhXQtSOQsG6FPBTsqwG22Js&_nc_ohc=_mq6YnNl_x0Q7kNvgF8Zvi6&_nc_gid=df0f0866d3e64a5898f5d7b9c21119c2&edm=AP4sbd4BAAAA&ccb=7-5&oh=00_AYCepHqPUAmSlH_gYWOKpDPLYWKuX1mlYgI5-uCyeuxuuA&oe=67B43BEB&_nc_sid=7a9f4b)  
+
+## 🧑‍💻 Sobre Mim  
+Sou um apaixonado por **Física Teórica, Cibersegurança e Desenvolvimento de Sistemas**. Busco constantemente **conhecimento profundo** em áreas como hacking, programação de baixo nível e computação avançada. Tenho interesse em **engenharia reversa, criptografia e segurança da informação**, além de um grande apreço por música, filosofia e linguagens.  
+
+## 🌐 Conecte-se Comigo  
+- **🔗 Site:** [meusite.com](https://panda-h0me.netlify.app/)  
+- **📺 YouTube:** [youtube.com/@X86BinaryGhost](https://www.youtube.com/@X86BinaryGhost)  
+- **📸 Instagram:** [@01pandal10](https://www.instagram.com/01pandal10/)  
+- **🖥 GitHub:** [github.com/panda12332145](https://github.com/panda12332145)  
+
+## 🚀 Áreas de Interesse  
+- **Cibersegurança Avançada** 🔒  
+- **Hacking & Engenharia Reversa** 💻  
+- **Computação de Baixo Nível** 🖥️  
+- **Matemática e Física Teórica** 📐⚛️  
+- **Música e Filosofia** 🎵📖  
+
+_"Conhecimento é poder, e a verdadeira liberdade vem do domínio sobre a informação."_  
+
+---
+
+📩 Para colaborações e projetos, sinta-se à vontade para me contatar! [📧Enviar e-mail para Panda12332145](mailto:amandasyscallinjector@gmail.com?subject=Interesse%20no%20projeto%20MAAPC&body=Olá%20Panda12332145,%0D%0A%0D%0AEspero%20que%20este%20e-mail%20lhe%20encontre%20bem.%20tive%20a%20oportunidade%20de%20conhecer%20seu%20projeto%20MAAPC%20no%20GitHub.%0D%0A%0D%0AFiquei%20muito%20interessado%20na%20abordagem%20e%20nas%20funcionalidades%20do%20projeto%20e%20gostaria%20de%20conversar%20mais%20sobre%20ele.%20Se%20possível,%20poderia%20compartilhar%20mais%20detalhes%20ou%20até%20mesmo%20discutirmos%20sobre%20possíveis%20colaborações?%0D%0A%0D%0AAgradeço%20desde%20já%20pela%20atenção%20e%20aguardo%20seu%20retorno.)
