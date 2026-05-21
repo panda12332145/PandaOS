@@ -1,6 +1,6 @@
 # 🚀 PandaOS Documentation
 
-> **PandaOS** é um sistema operacional **100% from-scratch** focado em modularidade, desempenho e flexibilidade.  Este repositório documenta a arquitetura completa, os fluxos de trabalho e os componentes essenciais, desde o bootloader até o kernel, drivers, e ferramentas de build e testes.
+> **PandaOS** é um sistema operacional **100% from-scratch** focado em modularidade, desempenho e flexibilidade. Este repositório documenta a arquitetura completa, os fluxos de trabalho e os componentes essenciais, desde o bootloader até o kernel, drivers, e ferramentas de build e testes.
 
 ---
 
