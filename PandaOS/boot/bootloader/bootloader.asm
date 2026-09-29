@@ -129,7 +129,7 @@ sys_info db 0x0F, "PANDA-OS v0.1", 0x0D, 0x0A
 con_msg01 db 0x0A,0x0F, ' Midias Sociais do criador: ',0x0F, 0
 con_msg02 db 0xFE, ' Instagram: @01pandal10', 0
 con_msg03 db 0x08, ' YouTube: @X86BinaryGhost', 0
-con_msg04 db 0x02, ' Email: amandasyscallinjector@gmail.com', 0
+con_msg04 db 0x02, ' Email: athos.cybersec@gmail.com', 0
 con_msg05 db ' GitHub: panda12332145', 0x03, 0
 
 error_msg db 0x4F, "Erro no kernel!", 0

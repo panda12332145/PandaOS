@@ -1,30 +1,72 @@
-# 🚀 PandaOS Documentation
-
-> **PandaOS** é um sistema operacional **100% from-scratch** focado em modularidade, desempenho e flexibilidade. Este repositório documenta a arquitetura completa, os fluxos de trabalho e os componentes essenciais, desde o bootloader até o kernel, drivers, e ferramentas de build e testes.
-
+# 🐼 PandaOS — Sistema Operacional x86 em Modo Protegido
+<p align="center">
+  <img alt="Tamanho do repositório" src="https://img.shields.io/github/repo-size/panda12332145/PandaOS">
+  <a href="https://github.com/panda12332145/PandaOS/commits/main"><img alt="Último commit" src="https://img.shields.io/github/last-commit/panda12332145/PandaOS"></a>
+  <a href="https://github.com/panda12332145/PandaOS"><img alt="Stars" src="https://img.shields.io/github/stars/panda12332145/PandaOS?style=social"></a>
+  <img alt="Linguagem" src="https://img.shields.io/badge/language-Assembly-blue">
+  <img alt="Licença" src="https://img.shields.io/github/license/panda12332145/PandaOS">
+</p>
 ---
+## 🔖 Resumo
 
-## 📑 Sumário
+Sistema operacional x86 escrito do zero em **Assembly**, construído para rodar em **modo protegido/long mode**, com bootloader por fases, kernel e subsistemas, drivers, bibliotecas e pipeline de build/testes documentado — incluindo vídeo de showcase e progresso atual.
 
-- [Introdução](#introdução-)
-- [Estrutura de Diretórios](#estrutura-de-diretórios-)
-- [Fluxo de Trabalho e CI/CD](#fluxo-de-trabalho-e-cicd-)
-- [O Bootloader Principal](#o-bootloader-principal-)
-- [Kernel e Subsistemas](#kernel-e-subsistemas-)
-- [Drivers e Bibliotecas](#drivers-e-bibliotecas-)
-- [Sistema de Build e Testes](#sistema-de-build-e-testes-)
-- [Considerações de Segurança e Futuras Melhorias](#considerações-de-segurança-e-futuras-melhorias-)
-- [Fluxo de Trabalho em Mermaid](#fluxo-de-trabalho-em-mermaid-)
-- [Considerações Finais](#considerações-finais-)
+### ✨ Funcionalidades Principais
 
----
-# ✨ Showcase Video
+- ✅ Bootloader multfase documentado (Real → Protegido → Long)
+- ✅ Kernel e subsistemas organizados
+- ✅ Drivers e bibliotecas próprias
+- ✅ Sistema de build e testes
+- ✅ CI/CD e fluxo de trabalho documentados
+- ✅ Vídeo de showcase no README
+
+## 📽 Demonstração
+
+```text
+$ make run
+Booting PandaOS...
+[Real Mode] → [Protected Mode] → [Long Mode]
+> menu principal do PandaOS
+
+🎬 Showcase: vídeo no GitHub
+```
+
+## ⚙️ Explicação das Partes Importantes
+
+### Fases do bootloader
+
+```asm
+; Fases do Bootloader:
+; 1. Real Mode     — POST, carregamento do setor
+; 2. Protected Mode — GDT, habilitação de segmentos
+; 3. Long Mode      — paging 64-bit, salto para o kernel
+```
+
+> A sequência clássica de todo OS x86 from scratch — cada fase tem seu arquivo e comentários no código.
+
+### Contato embutido no boot
+
+```asm
+con_msg03 db 0x08, ' YouTube: @X86BinaryGhost', 0
+con_msg04 db 0x02, ' Email: athos.cybersec@gmail.com', 0
+con_msg05 db ' GitHub: panda12332145', 0x03, 0
+```
+
+> Mensagens de créditos exibidas na tela de boot (e-mail do autor — corrigido nesta auditoria).
+
+##✨ Showcase Video
+
 > _**Ainda não Disponivel**_
 
-# ⚠️ Important
+---
+
+##⚠️ Important
+
 O PandaOS só funcionará no QEMU, para que possa ter operações e funções mais fáceis e legíveis.
 
-## ✨ Introdução
+---
+
+###✨ Introdução
 
 O **PandaOS** é um sistema operacional desenvolvido do zero, projetado para ambientes **x86-64**. O projeto é **multilíngue** e utiliza:
 
@@ -37,127 +79,9 @@ Essa abordagem híbrida permite um controle preciso dos recursos do sistema, gar
 
 ---
 
-## 📂 Estrutura de Diretórios
-
-A seguir, a árvore de diretórios do PandaOS, com descrições de cada componente:
-
-```plaintext
-/PandaOS
-├── /boot
-│   ├── mbr/
-│   │   ├── mbr.asm                # Master Boot Record (x86-64 ASM)
-│   │   └── partition_table.asm    # Tabela de partições primária
-│   ├── bootloader/
-│   │   ├── stage1.asm             # Bootloader estágio 1 (BIOS)
-│   │   ├── stage2.c               # Bootloader estágio 2 (Modo protegido)
-│   │   └── stage3.cpp             # Bootloader estágio 3 (Modo longo 64-bit)
-│   └── config/
-│       ├── boot.json              # Parâmetros de boot (ex: timeout, kernel path)
-│       └── hardware_detect.json   # Configuração inicial de hardware
-├── /kernel
-│   ├── arch/
-│   │   └── x86_64/
-│   │       ├── entry.asm          # Entry point do kernel (ASM)
-│   │       ├── gdt.asm            # Global Descriptor Table
-│   │       ├── idt.asm            # Interrupt Descriptor Table
-│   │       └── apic/              # Driver APIC (Advanced Programmable Interrupt Controller)
-│   ├── core/
-│   │   ├── kmain.cpp              # Ponto principal do kernel (C++)
-│   │   ├── memory/
-│   │   │   ├── pmm.c              # Physical Memory Manager (C)
-│   │   │   └── vmm.cpp            # Virtual Memory Manager (C++)
-│   │   ├── process/
-│   │   │   ├── scheduler.pas      # Escalonador de processos (Pascal)
-│   │   │   └── threads.c          # Gerenciamento de threads
-│   │   ├── syscalls/
-│   │   │   ├── syscalls.asm       # Syscalls de baixo nível (ASM)
-│   │   │   └── syscalls_api.c     # API de syscalls para userland
-│   │   └── fs/
-│   │       ├── panda_fs.cpp       # Sistema de arquivos customizado
-│   │       └── vfs.c              # Virtual File System
-├── /drivers
-│   ├── storage/
-│   │   ├── ata.cpp                # Driver ATA (C++)
-│   │   ├── nvme.asm               # Driver NVMe (ASM para performance)
-│   │   └── fs_drivers/
-│   │       ├── ext4.c             # Driver para sistemas externos (ex: EXT4)
-│   │       └── fat32.pas          # Driver FAT32 (Pascal)
-│   ├── video/
-│   │   ├── vga.c                  # Driver VGA básico
-│   │   ├── framebuffer.cpp        # Driver para framebuffer
-│   │   └── gpu/
-│   │       ├── nvidia.c           # Driver para GPUs NVIDIA
-│   │       └── amd.asm            # Otimizações para AMD em ASM
-│   ├── input/
-│   │   ├── keyboard.c             # Driver de teclado (PS/2)
-│   │   ├── mouse.cpp              # Driver de mouse
-│   │   └── usb/
-│   │       ├── usb_core.pas       # Core USB em Pascal
-│   │       └── usb_hid.c          # Dispositivos HID USB
-│   └── pci/
-│       ├── pci_enum.c             # Enumeração de dispositivos PCI
-│       └── pci_devices.json       # Database de IDs PCI
-├── /lib
-│   ├── libc/
-│   │   ├── stdio.c                # printf, scanf, etc.
-│   │   ├── stdlib.cpp             # malloc, free (C++)
-│   │   └── math.pas               # Funções matemáticas (Pascal)
-│   ├── libpanda/
-│   │   ├── graphics.py           # Helpers gráficos em Python
-│   │   └── sysutils.pas           # Utilitários de sistema em Pascal
-│   └── firmware/
-│       └── uefi/                  # Firmware UEFI (se aplicável)
-├── /userland
-│   ├── init/
-│   │   └── init.c                # Processo init (primeiro processo userspace)
-│   ├── shell/
-│   │   ├── shell.cpp             # Shell principal (C++)
-│   │   └── scripts/
-│   │       ├── network.py        # Scripts de rede em Python
-│   │       └── utils.pas         # Utilitários em Pascal
-│   └── gui/
-│       ├── window_manager.cpp    # Gerenciador de janelas
-│       └── themes/
-│           ├── default.json      # Tema padrão (JSON)
-│           └── icons/
-├── /config
-│   ├── system/
-│   │   ├── sysconfig.json        # Configuração do sistema
-│   │   └── network.json          # Configurações de rede
-│   └── users/
-│       ├── root.json             # Configurações do root
-│       └── permissions.pas       # Gerenciamento de permissões
-├── /build
-│   ├── toolchain/
-│   │   ├── cross-compiler/       # Compilador cruzado x86_64-panda
-│   │   └── linker_scripts/       # Scripts de linker para o kernel
-│   ├── iso/                      # ISO gerada
-│   └── logs/                     # Logs de compilação
-├── /tests
-│   ├── unit/
-│   │   ├── memory_tests.c        # Testes de memória
-│   │   └── syscall_tests.pas     # Testes de syscall em Pascal
-│   ├── integration/
-│   │   ├── hardware_tests.py     # Testes de hardware com Python
-│   │   └── stress_tests.cpp      # Testes de estresse
-│   └── qemu/                     # Configs para emulação
-├── /docs
-│   ├── specs/                    # Especificações técnicas
-│   ├── man/                      # Manuais
-│   └── api/                      # Documentação da API
-└── /scripts
-    ├── build.py                  # Script de build principal (Python)
-    ├── deploy.sh                 # Deploy em hardware real
-    └── tools/
-        ├── partition_manager.pas # Gerenciador de partições
-        └── kernel_debugger.cpp   # Debugger do kernel
-```
-
-Cada diretório foi estruturado para manter a **clareza** e a **modularidade** do projeto, facilitando a manutenção e a expansão contínua do sistema.
-
 ---
 
-## 🔄 Fluxo de Trabalho e CI/CD
+###🔄 Fluxo de Trabalho e CI/CD
 
 O desenvolvimento do PandaOS segue um fluxo de trabalho rigoroso, integrando práticas de CI/CD para garantir estabilidade e qualidade. Veja como o processo se desenvolve:
 
@@ -217,11 +141,15 @@ Esse diagrama detalha as etapas desde o planejamento, desenvolvimento, seleção
 
 ---
 
-## 🔧 O Bootloader Principal
+---
+
+###🔧 O Bootloader Principal
 
 O bootloader é a primeira etapa de inicialização e é dividido em **três estágios** para contornar as limitações do ambiente de boot e preparar o sistema para o kernel em 64-bit:
 
-### Fases do Bootloader
+---
+
+####Fases do Bootloader
 
 1. **Stage 1 (BIOS – Modo Real)**  
    - **Função:** Inicializa o sistema e prepara a transição para o modo protegido.  
@@ -235,7 +163,9 @@ O bootloader é a primeira etapa de inicialização e é dividido em **três est
    - **Função:** Configura o ambiente de execução em 64-bit e transfere o controle para o kernel.  
    - **Implementação:** Em C++ (`stage3.cpp`) 🔧
 
-### Exemplo de Código do Bootloader
+---
+
+####Exemplo de Código do Bootloader
 
 ```asm
 [org 0x7C00]
@@ -285,7 +215,9 @@ start:
 
 ---
 
-## ⚙️ Kernel e Subsistemas
+---
+
+###⚙️ Kernel e Subsistemas
 
 Após o bootloader, o controle passa para o kernel, composto por diversos módulos críticos:
 
@@ -306,7 +238,9 @@ Após o bootloader, o controle passa para o kernel, composto por diversos módul
 
 ---
 
-## 🛠️ Drivers e Bibliotecas
+---
+
+###🛠️ Drivers e Bibliotecas
 
 Os drivers são desenvolvidos com foco em performance e compatibilidade:
 
@@ -324,7 +258,9 @@ Os drivers são desenvolvidos com foco em performance e compatibilidade:
 
 ---
 
-## 📦 Sistema de Build e Testes
+---
+
+###📦 Sistema de Build e Testes
 
 Para garantir a qualidade e integridade do PandaOS, adotamos:
 
@@ -342,7 +278,9 @@ Para garantir a qualidade e integridade do PandaOS, adotamos:
 
 ---
 
-## 🔒 Considerações de Segurança e Futuras Melhorias
+---
+
+###🔒 Considerações de Segurança e Futuras Melhorias
 
 - **Isolamento de Memória:**  
   Implementação de paginação de 4 níveis para garantir a integridade dos processos.
@@ -355,7 +293,9 @@ Para garantir a qualidade e integridade do PandaOS, adotamos:
 
 ---
 
-## 🌐 Fluxo de Trabalho em Mermaid
+---
+
+###🌐 Fluxo de Trabalho em Mermaid
 
 O diagrama abaixo resume o fluxo de desenvolvimento e deploy do PandaOS:
 
@@ -412,7 +352,10 @@ graph TD
 ```
 ---
 
-# 🛠️ Current Progress
+---
+
+##🛠️ Current Progress
+
 - ✅ **VBE Support (640x480 8bpp)**
 - ✅ **Global Descriptor Table (GDT)**
 - ❌ **Entering Protected Mode**
@@ -435,42 +378,110 @@ graph TD
 
 ---
 
-## 💡 Considerações Finais
+## 📂 Estrutura do Projeto
 
-O PandaOS é um projeto ambicioso que une o melhor das linguagens e paradigmas para criar um sistema operacional robusto, seguro e modular.  
-Este repositório serve como referência técnica e guia para desenvolvedores que desejam entender, contribuir e expandir o sistema.
+```plaintext
+PandaOS/
+├── PandaOS/
+│   ├── boot/bootloader/    # bootloader.asm (fases + mensagens)
+│   ├── kernel/             # núcleo e subsistemas
+│   ├── drivers/            # drivers e bibliotecas
+│   └── build/              # artefatos
+├── LICENSE
+└── README.md               # Documentação completa
+```
 
-> **Nota:** Este documento será continuamente atualizado à medida que novas funcionalidades forem integradas. Mantenha-se conectado para acompanhar as evoluções do PandaOS! 🔄
+## 🛠️ Tecnologias
+
+| Ferramenta | Uso |
+|---|---|
+| **Assembly x86** | Bootloader e kernel |
+| **QEMU/VirtualBox** | Execução e teste |
+| **Make** | Build system |
+
+## ▶️ Instalação
+
+```bash
+git clone https://github.com/panda12332145/PandaOS.git
+cd PandaOS
+# montagem/chainloading conforme docs do repo
+```
+
+## 🚀 Execução
+
+```bash
+# execute em um emulador (QEMU):
+qemu-system-i386 -drive format=raw,file=SEU_IMAGEM.img
+# ougrave em mídia física por sua conta e risco
+```
+
+## 🧪 Testes
+
+Build + boot no emulador; progresso atual no README original (seção Current Progress).
+
+## ⚠️ Limitações
+
+- Em desenvolvimento ativo
+- Sem syscalls completas de usuário
+- Imagens commitadas podem estar defasadas vs código
+
+## 🚀 Roadmap
+
+- [ ] Completar modo long mode
+- [ ] Syscalls de usuário
+- [ ] Sistema de arquivos
+- [ ] CI de build
+
+## 📄 Licença
+
+Distribuído sob a licença do arquivo [`LICENSE`](LICENSE).
 
 ---
 
-Sinta-se à vontade para contribuir, reportar issues ou enviar pull requests para ajudar a melhorar este projeto.  
-**Happy Coding!** 👨‍💻👩‍💻
+## 👾 Autor
+
+<p align="center">
+  <img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/73090399?v=4" width="100px" alt="Avatar"/>
+</p>
+
+<p align="center">Feito por <strong>Panda12332145</strong> 👋🏽</p>
 
 ---
 
-# created by - Panda12332145 
+## 🧑‍💻 Sobre Mim
 
-![Panda12332145' Instagram Profile Picture](https://scontent-gru1-1.cdninstagram.com/v/t51.2885-19/117600834_654064835492344_4051007124330294069_n.jpg?stp=dst-jpg_s150x150_tt6&_nc_ht=scontent-gru1-1.cdninstagram.com&_nc_cat=104&_nc_oc=Q6cZ2AGzi7nuJGYfI5pToRe8PalArBoSQlsQZBQp_Gv89OA_BhXQtSOQsG6FPBTsqwG22Js&_nc_ohc=_mq6YnNl_x0Q7kNvgF8Zvi6&_nc_gid=df0f0866d3e64a5898f5d7b9c21119c2&edm=AP4sbd4BAAAA&ccb=7-5&oh=00_AYCepHqPUAmSlH_gYWOKpDPLYWKuX1mlYgI5-uCyeuxuuA&oe=67B43BEB&_nc_sid=7a9f4b)  
-
-## 🧑‍💻 Sobre Mim  
-Sou um apaixonado por **Física Teórica, Cibersegurança e Desenvolvimento de Sistemas**. Busco constantemente **conhecimento profundo** em áreas como hacking, programação de baixo nível e computação avançada. Tenho interesse em **engenharia reversa, criptografia e segurança da informação**, além de um grande apreço por música, filosofia e linguagens.  
-
-## 🌐 Conecte-se Comigo  
-- **🔗 Site:** [meusite.com](https://panda-h0me.netlify.app/)  
-- **📺 YouTube:** [youtube.com/@X86BinaryGhost](https://www.youtube.com/@X86BinaryGhost)  
-- **📸 Instagram:** [@01pandal10](https://www.instagram.com/01pandal10/)  
-- **🖥 GitHub:** [github.com/panda12332145](https://github.com/panda12332145)  
-
-## 🚀 Áreas de Interesse  
-- **Cibersegurança Avançada** 🔒  
-- **Hacking & Engenharia Reversa** 💻  
-- **Computação de Baixo Nível** 🖥️  
-- **Matemática e Física Teórica** 📐⚛️  
-- **Música e Filosofia** 🎵📖  
-
-_"Conhecimento é poder, e a verdadeira liberdade vem do domínio sobre a informação."_  
+Sou apaixonado por **Física Teórica, Cibersegurança e Desenvolvimento de Sistemas**. Tenho grande interesse em programação de baixo nível, engenharia reversa, automação, sistemas Windows, criptografia e segurança ofensiva. Também gosto bastante de música, filosofia e computação avançada.
 
 ---
 
-📩 Para colaborações e projetos, sinta-se à vontade para me contatar! [📧Enviar e-mail para Panda12332145](mailto:amandasyscallinjector@gmail.com?subject=Interesse%20no%20projeto%20MAAPC&body=Olá%20Panda12332145,%0D%0A%0D%0AEspero%20que%20este%20e-mail%20lhe%20encontre%20bem.%20tive%20a%20oportunidade%20de%20conhecer%20seu%20projeto%20MAAPC%20no%20GitHub.%0D%0A%0D%0AFiquei%20muito%20interessado%20na%20abordagem%20e%20nas%20funcionalidades%20do%20projeto%20e%20gostaria%20de%20conversar%20mais%20sobre%20ele.%20Se%20possível,%20poderia%20compartilhar%20mais%20detalhes%20ou%20até%20mesmo%20discutirmos%20sobre%20possíveis%20colaborações?%0D%0A%0D%0AAgradeço%20desde%20já%20pela%20atenção%20e%20aguardo%20seu%20retorno.)
+## 🌐 Redes
+
+* **Site:** [https://panda-h0me.netlify.app/](https://panda-h0me.netlify.app/)
+* **YouTube:** [https://www.youtube.com/@X86BinaryGhost](https://www.youtube.com/@X86BinaryGhost)
+* **Instagram:** [https://www.instagram.com/01pandal10/](https://www.instagram.com/01pandal10/)
+* **GitHub:** [https://github.com/panda12332145](https://github.com/panda12332145)
+* **LinkedIn:** [linkedin.com/in/athos-da-boanergis](https://www.linkedin.com/in/athos-d%C3%A3-boanergis-5585a4288/)
+
+---
+
+## 🚀 Áreas de Interesse
+
+* **Cibersegurança Avançada** 🔒
+* **Hacking & Engenharia Reversa** 💻
+* **Computação de Baixo Nível** 🖥️
+* **Matemática e Física Teórica** 📐⚛️
+* **Desenvolvimento de Ferramentas de Segurança** 🛠️
+
+_"Conhecimento é poder, e domínio técnico vem da compreensão profunda dos sistemas."_
+
+---
+
+## 📞 Contato & Suporte
+
+Para colaborações, dúvidas ou sugestões:
+
+📧 **E-mail:** [athos.cybersec@gmail.com](mailto:athos.cybersec@gmail.com)
+
+🐛 **Reportar Bug:** [Abrir Issue](https://github.com/panda12332145/PandaOS/issues)
+
+💡 **Sugerir Melhoria:** [Discussions](https://github.com/panda12332145/PandaOS/discussions)
